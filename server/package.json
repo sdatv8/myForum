@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "http-cors": "^2.0.0",
+    "pg": "^8.7.3"
+  }
+}
