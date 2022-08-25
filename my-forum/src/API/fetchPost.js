@@ -1,11 +1,15 @@
 import axios from "axios";
 
-export default async function fetchPost(body){
-  const response = await axios.post('http://127.0.0.1:3001/', body, {
+export default async function fetchPost(rpc, body){
+  let data = {
+    rpcName: rpc,
+    content: body
+  }
+
+
+  const response = await axios.post('http://127.0.0.1:3001/' + rpc, data, {
     headers: {
       'Content-Type': 'text/plain',
-      'Access-Control-Request-Headers': '*'
-
       }
   })
   console.log(response)

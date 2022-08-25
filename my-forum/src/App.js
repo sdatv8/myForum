@@ -2,9 +2,10 @@ import React from "react";
 import { Routes, Route } from "react-router";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage"
-import PostIdPage from "./component/PostIdPage";
-import NewPost from "./component/NewPost";
+import PostIdPage from "./pages/PostIdPage";
+import NewPost from "./pages/NewPostPage";
 import PostListByTopic from "./component/PostListByTopic";
+import ErrorPage from "./pages/ErrorPage";
 
 
 export default function App () {
@@ -15,7 +16,7 @@ export default function App () {
       <Route path="/newPost" element={<NewPost/>}/>
       <Route path="/post/:postId" element={<PostIdPage/>}/>
       <Route path="/:topic" element={<PostListByTopic/>}/>
-      <Route path="*" element={<MainPage/>}/>
+      <Route path="*" element={<ErrorPage/>}/>
     </Routes>
   )
 

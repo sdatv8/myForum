@@ -3,11 +3,13 @@ import '../Styles/index.css'
 import fetchGet from "../API/fetchGet.js";
 import TopicItem from "../component/TopicItem";
 import { Link } from "react-router-dom";
+import MyInput from "../helpers/Inputs/MyInput";
 
 
 export default function MainPage () {
 
   let [posts, setPosts] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     const responce = async () => {
@@ -35,10 +37,14 @@ export default function MainPage () {
     <div className="App">
       <div className="sidebar">
         <h1>Home Page</h1>
+        <div>
+          <MyInput nameInput={'Search...'} inputValue={setSearchQuery}/>
+        </div>
       </div>
       <div>
         <h3><Link to={`/newPost`}>New Post</Link></h3>
       </div>
+      
       <div>
         {getUniqTopic().map((topic, index) => {
           return <TopicItem topic={topic} posts={getPostsByTopic(topic)} key={index}/>

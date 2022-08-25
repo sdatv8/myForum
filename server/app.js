@@ -7,6 +7,10 @@ let responce = {}
 
 let topics = ['Python', 'JavaScirpt', 'Java']
 
+let comments = [
+  {id: 1, userName: 'Mikle', date: '12.07.2021', body: 'hello!'}
+]
+
 
 let posts = [
   {id: 1, topic:'Python', title: 'TilteName1', body: 'description', update: new Date('December 17')},
@@ -57,21 +61,36 @@ function serverForum(){
           const post = posts.filter(post => post.id == id)
           res.setHeader('Content-type', 'application/json')
           res.end(JSON.stringify(post))
+        } 
+        else if (req.url.match(/\/comment\/[0-9]+/)) {
+          const id = req.url.match(/[0-9]+/)[0]
+          const comment = comments.filter(comment => comment.id == id)
+          res.setHeader('Content-type', 'application/json')
+          res.end(JSON.stringify(comment))
         } else {
           res.end('Bad request 404')
         }
       } else if (req.method === 'POST'){
-          let body = ''
+          let body = ''    
           req.on('data', chunk => {
             body += chunk.toString()
           })
           req.on('end', () => {
             let params = JSON.parse(body)
-            params.id = posts.length + 1
-            params.update = new Date()
-            console.log(params)
-            posts.push(params)
-            res.end('OK')
+            if (req.url === '/setNewPost') {
+              let post = params.content
+              console.log(post)
+              post.id = posts.length + 1
+              post.update = new Date()
+              posts.push(post)
+              res.end('OK')
+            } else if (req.url === '/setComment') {
+              let comment = params.content
+              console.log(comment)
+              comment.date = new Date()
+              comments.push({id: Number(comment.id), userName: comment.userName, date: comment.date, body: comment.body})
+              res.end('OK')
+            }
           })
         }
     })

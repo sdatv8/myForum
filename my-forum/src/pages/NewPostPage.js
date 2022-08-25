@@ -19,16 +19,16 @@ export default function NewPost (props) {
   }
 
   async function createPost() {
+    let rpcName = 'setNewPost'
     if (title && body) {
       let post = {
         title: title,
         body: body,
         topic: topic,
       }
-      await fetchPost(post)
+      await fetchPost(rpcName, post)
       navigate(`/${topic}`, { replace: true })
     }
-
   }
   
   return (
