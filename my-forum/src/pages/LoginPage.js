@@ -1,40 +1,43 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context";
 import MyButton from "../helpers/Buttons/MyButton";
 import MyInput from "../helpers/Inputs/MyInput";
 import '../Styles/index.css'
 
 export default function LoginPage () {
   
-  let navigate = useNavigate();
+  const {isAuth, setIsAuth} = useContext(AuthContext)
+
   const [users, setUser] = useState([
     {id: 1, login: 'login', password: 'password'},
   ])
-
-  
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
   function loginPage () {
-    navigate(`/`, { replace: true })
+    if (login && password) {
+      setIsAuth(true)
+      localStorage.setItem('auth', 'true')
+    }
   }
 
-
   return (
-    <div className="loginPage">
-      <h1>Welcome</h1>
-      <form >
-        <p>
-          <strong>L: </strong>
-          <MyInput nameInput={"login"} inputValue={setLogin}/>
-        </p>
-        <p>
-          <strong>P: </strong>
-          <MyInput nameInput={"password"} inputValue={setPassword}/>
-        </p>
-        <MyButton nameButton={'Sign In'} buttonClick={loginPage}/>
-      </form>
+    <div className="login-background">
+      <div className="login-container">
+        <form className="container">
+          <div className="form-floating mb-3">
+            <MyInput typeInput={"email"} id={"floatingInput"} styleInput={"form-control"} nameInput={"Login"} inputValue={setLogin}/>
+            <label for="floatingInput">Login</label>
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div className="form-floating mb-3">
+            <MyInput typeInput={"password"} id={"floatingPassword"} styleInput={"form-control"} nameInput={"Password"} inputValue={setPassword}/>
+            <label for="floatingPassword">Password</label>
+          </div>
+          <MyButton nameButton={'Sign In'} styleButton={"btn btn-primary"} buttonClick={loginPage}/>
+        </form>
+      </div>
     </div>
   )
 }
