@@ -29,7 +29,7 @@ export default function LoginPage () {
           <div className="form-floating mb-3">
             <MyInput typeInput={"email"} id={"floatingInput"} styleInput={"form-control"} nameInput={"Login"} inputValue={setLogin}/>
             <label for="floatingInput">Login</label>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div className="form-floating mb-3">
             <MyInput typeInput={"password"} id={"floatingPassword"} styleInput={"form-control"} nameInput={"Password"} inputValue={setPassword}/>

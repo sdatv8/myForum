@@ -5,6 +5,8 @@ import fetchPost from "../API/fetchPost.js";
 import MyButton from "../helpers/Buttons/MyButton";
 import MyInput from "../helpers/Inputs/MyInput.js";
 import Comment from "../component/Comment.js";
+import Sidebar from "../component/Sidebar.js";
+import '../Styles/index.css'
 
 export default function PostIdPage(props) {
 
@@ -13,10 +15,6 @@ export default function PostIdPage(props) {
   const [post, setPost] = useState([])
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
-
-  function cancelPost(){
-    navigate("/", { replace: true })
-  }
 
   useEffect(() => {
     const responce = async () => {
@@ -52,17 +50,24 @@ export default function PostIdPage(props) {
 
   return (
     <div>
-      <h1>{post.title}</h1>
-      <span>{post.body}</span>
-      <MyButton nameButton={'Main Menu'} buttonClick={cancelPost}/>
-      <div>
-        <MyInput nameInput={'Comment'} inputValue={setComment}/>
-        <MyButton nameButton={'Add'} buttonClick={addComment}/>
-      </div>
-      <div>
-        {comments.map(comment => {
-          return <Comment comment={comment}/>
-        })}
+      <Sidebar/>
+      <div className="content-centr">
+        <div className="container-md mt-3 mb-3 bg-white text-dark">
+          <h1>{post.title}</h1>
+          <span>{post.body}</span>          
+        </div>
+        <div className="container-md mt-3 mb-3">
+          <div className="form-floating" style={{marginBottom: '10px'}}>
+            <textarea className="form-control" placeholder="Leave a comment here" id="textarea2" style={{height: '120px'}} onChange={(event) => setComment(event.target.value)}></textarea>
+            <label for="textarea2">Comments</label>
+          </div>
+          <MyButton nameButton={'Submit'} styleButton={"btn btn-primary top-10"} buttonClick={addComment}/>
+        </div>
+        <div>
+          {comments.map(comment => {
+            return <Comment comment={comment}/>
+          })}
+        </div>
       </div>
     </div>
     

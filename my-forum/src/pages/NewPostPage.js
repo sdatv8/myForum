@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchPost from "../API/fetchPost";
+import Sidebar from "../component/Sidebar";
 import MyButton from "../helpers/Buttons/MyButton";
 import MyInput from "../helpers/Inputs/MyInput";
 import MySelectTopic from "../helpers/Select/MySelectTopic";
 
-export default function NewPost (props) {
+export default function NewPostPage (props) {
 
   let navigate = useNavigate();
 
@@ -33,6 +34,7 @@ export default function NewPost (props) {
   
   return (
   <div>
+    <Sidebar/>
     <div className="sidebar">
       <h1>New Post</h1>
     </div>
