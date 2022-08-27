@@ -80,6 +80,10 @@ function serverForum(){
             if (req.url === '/setNewPost') {
               let post = params.content
               console.log(post)
+              let newTopic = topics.filter(topic => topic === post.topic)
+              if(!newTopic.length) {
+                topics.push(post.topic)
+              }
               post.id = posts.length + 1
               post.update = new Date()
               posts.push(post)

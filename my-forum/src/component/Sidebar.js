@@ -15,7 +15,7 @@ export default function Sidebar () {
   }
 
   return (
-    <nav className ="navbar bg-light">
+    <nav className ="navbar" style={{backgroundColor: '#e3f2fd'}}>
       <div className ="container-fluid">
         <Link className ="navbar-brand" to="/">Home Page</Link>
       <form className ="d-flex" role="search">

@@ -64,6 +64,7 @@ export default function PostIdPage(props) {
           <MyButton nameButton={'Submit'} styleButton={"btn btn-primary top-10"} buttonClick={addComment}/>
         </div>
         <div>
+          <h3>Comments:</h3>
           {comments.map(comment => {
             return <Comment comment={comment}/>
           })}
