@@ -3,6 +3,7 @@ import '../Styles/index.css'
 import fetchGet from "../API/fetchGet.js";
 import TopicItem from "../component/TopicItem";
 import Sidebar from "../component/Sidebar";
+import { Link } from "react-router-dom";
 
 
 export default function MainPage () {
@@ -35,9 +36,9 @@ export default function MainPage () {
     <div>
       <Sidebar/>
 
-      {/* <div>
+      <div>
         <h3><Link to={`/newPost`}>New Post</Link></h3>
-      </div> */}
+      </div>
       
       <div className="content-centr">
         {getUniqTopic().map((topic, index) => 
