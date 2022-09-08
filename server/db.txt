@@ -1,0 +1,38 @@
+create database myforum
+
+create schema forum
+
+CREATE TABLE "users" (
+  userid int PRIMARY KEY,
+  username varchar(25) NOT NULL,
+  passwordHash varchar(25) NOT null)
+  
+CREATE TABLE "posts" (
+  postid int unique PRIMARY KEY,
+  title varchar(25) NOT NULL,
+  topicid int NOT NULL,
+  body text,
+  FOREIGN KEY (topicid) references topics(topicid))
+  
+CREATE TABLE "comments" (
+  commentid int unique PRIMARY KEY,
+  postid int NOT NULL,
+  comment text NOT null,
+  FOREIGN KEY (postid) references posts(postid))
+
+CREATE TABLE "topics" (
+  topicid int unique PRIMARY KEY,
+  topic varchar(25) NOT NULL)
+  
+
+CREATE TABLE "userdata" (
+  userid int unique,
+  postsid int DEFAULT NULL,
+  commentid int DEFAULT null,
+  FOREIGN KEY (userid) references users(userid),
+  FOREIGN KEY (commentid) references comments(commentid))
+  
+CREATE TABLE "usersetting" (
+  userid int unique,
+  settingParams1 int DEFAULT NULL,
+  FOREIGN KEY (userid) references userdata(userid))
