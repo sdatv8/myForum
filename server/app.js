@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { sequelize } from './db/connection.js'
 import userRoutes from './routes/user.routes.js'
 import './db/models/userModel.js'
@@ -8,6 +9,7 @@ import './db/models/commentModel.js'
 
 const PORT = 3001
 const app = express()
+app.use(cors())
 
 async function main () {
   await sequelize.sync({force: false})

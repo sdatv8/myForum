@@ -1,21 +1,60 @@
 import { User } from "../models/userModel.js"
 
 export const createUser = async (req, res) => {
-  const {username, password} = req.body
-  console.log(username, password)
-
-  const newUser = await User.create({
-    username: username,
-    passwordhash: password,
-  })
-  console.log(newUser)
-  res.json('ok')
+  const {
+    firstName,
+    lastName,
+    login,
+    email,
+    password,
+  } = req.body
+  try{
+    const newUser = await User.create({
+      firstname: firstName,
+      lastname: lastName,
+      username: login,
+      email: email,
+      password: password,
+    })
+    if (newUser) {
+      res.json({
+        status: `ok`,
+        error: ``
+      })
+    } else {
+      res.json({
+        status: `error`,
+        error: `Not create user`
+      })
+    }
+  } catch (e) {
+    console.log(e)
+    req.json('Error 404')
+  }
 }
 
-export const getUser = async (req, res) => {
-  const users = await User.findAll()
-  console.log(users)
-  res.json({username: 'username'})
+
+
+export const loginUser = async (req, res) => {
+  const {
+    login,
+    password,
+  } = req.body
+  console.log(req.body)
+  const user = await User.findOne({ where: { username: login } })
+  if (user && user.dataValues.password === password) {
+    res.json({
+      status: `ok`,
+      sessionId: user.dataValues.userid,
+      error: ``
+  })
+  } else {
+    res.json({
+      status: `error`,
+      sessionId: ``,
+      error: `Not found user`
+  })
+  }
 }
 
 export const getOneUser = (req, res) => {
