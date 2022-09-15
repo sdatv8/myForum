@@ -1,4 +1,5 @@
 import getTopicID from "../../helpers/getTopicID.js"
+import Op from "sequelize"
 import getUniqueTopics from "../../helpers/getUniqueTopics.js"
 import previewText from "../../helpers/previewText.js"
 import { Post } from "../models/postModel.js"
@@ -44,7 +45,7 @@ export const getPosts = async (req, res) => {
       return({
         postid: post.postid,
         title: post.title,
-        body: previewText(post.body),
+        body: previewText(post.body, 30),
         image: post.image,
         topic: post['Topic.topicname'],
       })
@@ -97,8 +98,40 @@ export const getOnePost = async (req, res) => {
   }
 }
 
-export const updatePost = (req, res) => {
+export const getPostsByTopic = async (req, res) => {
+  const {topicname} = req.body
+  const topicid = await getTopicID(topicname)
+  try{
+    const postsByTopic = await Post.findAll({
+      raw: true,
+      where: {
+        TopicTopicid: topicid
+      },
+      include: Topic,
+    })
+    const posts = postsByTopic.map(post => {
+      return({
+        postid: post.postid,
+        title: post.title,
+        body: previewText(post.body, 195),
+        image: post.image,
+        topic: post['Topic.topicname'],
+      })
+    })
 
+    let toptics = getUniqueTopics(posts)
+    res.json({
+      status: `ok`,
+      posts: posts,
+      toptics: toptics,
+    })
+  } catch (e) {
+    console.log(e)
+    res.json({
+      status: `error`,
+      posts: ``
+    })
+  }
 }
 
 export const deletePost = (req, res) => {

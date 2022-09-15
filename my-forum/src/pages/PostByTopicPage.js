@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import fetchGet from "../API/fetchGet.js";
+import fetchPost from "../API/fetchPost.js";
 import PostItem from "../component/PostItem";
 import Sidebar from "../component/Sidebar.js";
 import '../Styles/index.css'
@@ -13,9 +14,16 @@ export default function PostByTopicPage () {
 
   useEffect(() => {
     const responce = async () => {
-      const data = await fetchGet(`/${topic}`)
-      setPost(data)
-      return data
+      const data = {
+        topicname: topic 
+      }
+      const responce = await fetchPost(`getPostsByTopic`, data)
+      if (responce.status === `ok`) {
+        console.log(responce.posts)
+        setPost(responce.posts)
+        return responce.posts
+      }
+      return null
     }
     responce()
   }, [])
