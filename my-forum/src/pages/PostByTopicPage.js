@@ -19,7 +19,6 @@ export default function PostByTopicPage () {
       }
       const responce = await fetchPost(`getPostsByTopic`, data)
       if (responce.status === `ok`) {
-        console.log(responce.posts)
         setPost(responce.posts)
         return responce.posts
       }

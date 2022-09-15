@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import fetchGet from "../API/fetchGet.js";
 import fetchPost from "../API/fetchPost.js";
 import MyButton from "../helpers/Buttons/MyButton";
 import MyInput from "../helpers/Inputs/MyInput.js";
@@ -34,22 +33,32 @@ export default function PostIdPage(props) {
 
   useEffect(() => {
     const responce = async () => {
-      const comment = await fetchGet(`/comment/${postId}`)
-      setComments(comment)
+      const data = {
+        postid: postId,
+        sessionid: localStorage.getItem('sessionid'),
+      }
+      const responce = await fetchPost(`getCommentByPost`, data)
+      if (responce.status === `ok`) {
+        console.log(responce.comment)
+        setComments(responce.comment)
+      }
     }
     responce()
   }, [comment])
 
   async function addComment() {
-    let rpcName = 'setComment'
+    let rpcName = 'setNewComment'
     if (comment) {
-      let post = {
-        id: postId,
-        userName: 'Mikle',
+      const data = {
+        postid: postId,
         body: comment,
+        sessionid: localStorage.getItem('sessionid'),
       }
-      await fetchPost(rpcName, post)
-      setComment('')
+      const responce = await fetchPost(rpcName, data)
+      if (responce.status === `ok`) {
+        console.log(responce.comment)
+        // setComment('')
+      }
     }
     return null
   }
@@ -72,10 +81,10 @@ export default function PostIdPage(props) {
           <MyButton nameButton={'Submit'} styleButton={"btn btn-primary top-10"} buttonClick={addComment}/>
         </div>
         <div>
-          {/* <h3>Comments:</h3>
+          <h3>Comments:</h3>
           {comments.map(comment => {
             return <Comment comment={comment}/>
-          })} */}
+          })}
         </div>
       </div>
     </div>

@@ -11,12 +11,8 @@ export const Comment = sequelize.define(
         autoIncrement: true,
         primaryKey: true,
       },
-      comment: {
+      body: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      postid: {
-        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
@@ -26,10 +22,8 @@ export const Comment = sequelize.define(
     }
 );
 
-Post.hasOne(Comment, {
-  foreignKey: 'postid'
-})
+Post.hasOne(Comment);
+Comment.belongsTo(Post);
 
-User.hasOne(Comment, {
-  foreignKey: 'userid'
-})
+User.hasOne(Comment);
+Comment.belongsTo(User);

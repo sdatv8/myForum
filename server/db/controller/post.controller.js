@@ -137,3 +137,7 @@ export const getPostsByTopic = async (req, res) => {
 export const deletePost = (req, res) => {
 
 }
+
+export const updatePost = (req, res) => {
+
+}
