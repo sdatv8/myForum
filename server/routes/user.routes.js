@@ -1,12 +1,12 @@
 import Router from "express"
 import { createUser, deleteUser, getOneUser, loginUser, updateUser } from "../db/controller/user.controller.js"
 
-const router = new Router()
+const userRoutes = new Router()
 
-router.post('/api/getUser', createUser)
-router.post('/api/loginUser', loginUser)
-router.get('/api/user/:id', getOneUser)
-router.put('/api/user', updateUser)
-router.delete('/api/user/:id', deleteUser)
+userRoutes.post('/api/getUser', createUser)
+userRoutes.post('/api/loginUser', loginUser)
+userRoutes.get('/api/user/:id', getOneUser)
+userRoutes.put('/api/user', updateUser)
+userRoutes.delete('/api/user/:id', deleteUser)
 
-export default router
+export default userRoutes

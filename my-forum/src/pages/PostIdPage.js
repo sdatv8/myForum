@@ -18,9 +18,16 @@ export default function PostIdPage(props) {
 
   useEffect(() => {
     const responce = async () => {
-      const data = await fetchGet(`/post/${postId}`)
-      setPost(data[0])
-      return data
+      const data = {
+        postid: postId
+      }
+      const responce = await fetchPost(`getOnePost`, data)
+      if (responce.status === `ok`) {
+        console.log(`Post`,responce)
+        setPost(responce.post)
+        return responce.post
+      }
+      return null
     }
     responce()
   }, [])
@@ -44,6 +51,7 @@ export default function PostIdPage(props) {
       await fetchPost(rpcName, post)
       setComment('')
     }
+    return null
   }
 
 
@@ -64,10 +72,10 @@ export default function PostIdPage(props) {
           <MyButton nameButton={'Submit'} styleButton={"btn btn-primary top-10"} buttonClick={addComment}/>
         </div>
         <div>
-          <h3>Comments:</h3>
+          {/* <h3>Comments:</h3>
           {comments.map(comment => {
             return <Comment comment={comment}/>
-          })}
+          })} */}
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ export default function App () {
   const [isAuth, setIsAuth] = useState(false)
 
   useEffect( () => {
-    if (localStorage.getItem('auth')) {
+    if (localStorage.getItem('sessionid')) {
       setIsAuth(true)
     }
   })

@@ -1,22 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import '../Styles/index.css'
-import fetchGet from "../API/fetchGet.js";
 import TopicItem from "../component/TopicItem";
 import Sidebar from "../component/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import PostItem from "../component/PostItem";
+import fetchPost from "../API/fetchPost";
 
 
 export default function MainPage () {
 
   const [posts, setPosts] = useState([])
+  const [topics, setTopics] = useState([])
   const [query, setQuery] = useState('')
   const [searchQuery, setSearchQuery] = useState([])
 
   useEffect(() => {
     const responce = async () => {
-      const data = await fetchGet()
-      setPosts(data)
+      const data = await fetchPost(`getPosts`, {
+        sessionid: localStorage.getItem('sessionid'),
+      })
+      if (data.status === `ok`) {
+        console.log(data.posts)
+        setPosts(data.posts)
+        setTopics(data.toptics)
+      }
       return data
     }
     responce()
@@ -30,14 +37,10 @@ export default function MainPage () {
   }
 
   function getPostsByTopic(topic) {
+    console.log(topics)
     let postByTopic = posts.filter(post => post.topic === topic)
+    console.log(postByTopic)
     return(postByTopic.slice(0,3))
-  }
-
-  function getUniqTopic(){
-    let toptics = posts.map(post => post.topic)
-    let uniqTopic = [...new Set(toptics)]
-    return(uniqTopic)
   }
  
 
@@ -52,10 +55,10 @@ export default function MainPage () {
           <PostItem post={post} key={index}/>
         )
         :
-        getUniqTopic().map((topic, index) => 
+        topics.map((topic, index) => 
           <TopicItem topic={topic} posts={getPostsByTopic(topic)} key={index}/>
         )
-      }
+      } 
       </div>
     </div>
   )

@@ -24,7 +24,7 @@ export default function LoginPage () {
       const responce = await fetchPost('loginUser', userData)
       if(responce.status === `ok`){
         setIsAuth(true)
-        localStorage.setItem('auth', 'true')
+        localStorage.setItem('sessionid', responce.sessionId)
       } else {
         console.log(`Error: `, responce.error)
       }

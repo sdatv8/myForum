@@ -19,12 +19,8 @@ export const Post = sequelize.define(
         type: DataTypes.STRING,
         allowNull: false,
       },
-      topicid: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      userid: {
-        type: DataTypes.INTEGER,
+      image: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
@@ -34,9 +30,8 @@ export const Post = sequelize.define(
     }
 );
 
-User.hasOne(Post, {
-  foreignKey: 'userid',
-});
-Topic.hasOne(Post, {
-  foreignKey: 'topicid'
-})
+User.hasOne(Post);
+Post.belongsTo(User);
+
+Topic.hasOne(Post);
+Post.belongsTo(Topic);

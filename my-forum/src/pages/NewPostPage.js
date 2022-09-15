@@ -21,15 +21,19 @@ export default function NewPostPage (props) {
 
 
   async function createPost() {
-    let rpcName = 'setNewPost'
+    let rpcName = 'createPost'
     if (title && body) {
       let post = {
         title: title,
         body: body,
-        topic: topic,
+        topicname: topic,
+        sessionid: localStorage.getItem('sessionid'),
       }
-      await fetchPost(rpcName, post)
-      navigate(`/${topic}`, { replace: true })
+      const responce = await fetchPost(rpcName, post)
+      console.log(responce)
+      if (responce.status === `ok`) {
+        navigate(`/${topic}`, { replace: true })
+      }
     }
   }
   function activeModal () {

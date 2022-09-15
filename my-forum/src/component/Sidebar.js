@@ -11,7 +11,7 @@ export default function Sidebar ({setSearchQuery, searchPosts}) {
 
   function logout() {
     setIsAuth(false)
-    localStorage.removeItem('auth')
+    localStorage.removeItem('sessionid')
   }
 
   return (
