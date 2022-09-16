@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import fetchGet from "../../API/fetchGet.js";
+import React from "react";
 
 export default function MySelectTopic ({inputValue, topics}) {
 

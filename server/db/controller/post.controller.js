@@ -134,6 +134,26 @@ export const getPostsByTopic = async (req, res) => {
   }
 }
 
+export const getUniqueTopic = async (req, res) => {
+  const {sessionid} = req.body
+  try {
+  const topics= await Topic.findAll({raw: true})
+  const topicsArray = topics.map(topic => {
+    return topic.topicname
+  })
+  res.json({
+    status: `ok`,
+    topics: topicsArray,
+  })
+  } catch (e) {
+    console.log(e)
+    res.json({
+      status: `error`,
+      posts: ``
+    })
+  }
+}
+
 export const deletePost = (req, res) => {
 
 }

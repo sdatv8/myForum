@@ -7,6 +7,7 @@ import Sidebar from "../component/Sidebar";
 import MyButton from "../helpers/Buttons/MyButton";
 import MyInput from "../helpers/Inputs/MyInput";
 import MySelectTopic from "../helpers/Select/MySelectTopic";
+import DragAndDrop from "../helpers/dragAndDrop/DragAndDrop";
 
 export default function NewPostPage (props) {
 
@@ -18,6 +19,7 @@ export default function NewPostPage (props) {
   const [topics, setTopics] = useState([])
   const [modalActive, setModalActive] = useState(false)
   const [newTopic, setNewTopic] = useState('')
+  const [image, setImage] = useState('')
 
 
   async function createPost() {
@@ -51,9 +53,13 @@ export default function NewPostPage (props) {
 
   useEffect(() => {
     const responce = async () => {
-      const data = await fetchGet(`/topics`)
-      setTopics(data)
-      return data
+      const data = {}
+      const responce = await fetchPost(`getUniqueTopic`, data)
+      if (responce.status === `ok`) {
+        setTopics(responce.topics)
+        return responce.topics
+      }
+      return null
     }
     responce()
   }, [])
@@ -70,6 +76,13 @@ export default function NewPostPage (props) {
             <MySelectTopic inputValue={setTopic} topics={topics}/>
             <MyButton nameButton={'+'} styleButton={"btn btn-outline-secondary"} buttonClick={activeModal}/>
         </form>
+        <DragAndDrop getImage={setImage}/>
+        {image
+        ?
+        <img src={image} className="card-img-top mb-3" alt="..."/>
+        :
+        <></>
+        }
         <Modal modalActive={modalActive} saveNewTopic={saveNewTopic} activeModal={activeModal} setNewTopic={setNewTopic}/>
         <div className="form-floating" style={{marginBottom: '10px'}}>
           <textarea className="form-control" placeholder="Leave a comment here" id="textarea2" style={{height: '420px'}} onChange={(event) => setBody(event.target.value)}></textarea>
