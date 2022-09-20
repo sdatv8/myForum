@@ -71,6 +71,7 @@ export default function PostIdPage(props) {
       <div className="content-centr">
         <div className="container-md mt-3 mb-3 bg-white text-dark">
           <h1>{post.title}</h1>
+          <img src={post.image} className="card-img-top mb-3" alt="..."/>
           <span>{post.body}</span>          
         </div>
         <div className="container-md mt-3 mb-3">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fetchGet from "../API/fetchGet";
 import fetchPost from "../API/fetchPost";
 import Modal from "../helpers/Modals/Modal.js";
 import Sidebar from "../component/Sidebar";
@@ -29,6 +28,7 @@ export default function NewPostPage (props) {
         title: title,
         body: body,
         topicname: topic,
+        image: image,
         sessionid: localStorage.getItem('sessionid'),
       }
       const responce = await fetchPost(rpcName, post)
@@ -76,6 +76,7 @@ export default function NewPostPage (props) {
             <MySelectTopic inputValue={setTopic} topics={topics}/>
             <MyButton nameButton={'+'} styleButton={"btn btn-outline-secondary"} buttonClick={activeModal}/>
         </form>
+        {console.log(image)}
         <DragAndDrop getImage={setImage}/>
         {image
         ?

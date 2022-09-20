@@ -36,7 +36,6 @@ export default function PostByTopicPage () {
     <div >
         <Sidebar/>
       <div className="content-centr">
-        {console.log(posts)}
           {posts.map((post, index) => {
             return <PostItem post={post} key={index} cardStyle={cardStyle}/>
           })}

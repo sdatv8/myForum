@@ -20,9 +20,9 @@ export default function MainPage () {
         sessionid: localStorage.getItem('sessionid'),
       })
       if (data.status === `ok`) {
-        console.log(data.posts)
         setPosts(data.posts)
         setTopics(data.toptics)
+        console.log(data.post)
         return data
       }
     }
