@@ -3,7 +3,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "struct": "node default-structure-forum.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

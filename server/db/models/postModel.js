@@ -16,11 +16,11 @@ export const Post = sequelize.define(
         allowNull: false,
       },
       body: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT('long'),
         allowNull: false,
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.BLOB,
         allowNull: false,
       },
     },

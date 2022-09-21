@@ -11,6 +11,7 @@ export const createPost = async (req, res) => {
   const {
     title,
     body,
+    image,
     topicname,
     sessionid,
   } = req.body
@@ -20,7 +21,7 @@ export const createPost = async (req, res) => {
     const newPost = await Post.create({
       title: title,
       body: body,
-      image: 'test',
+      image: image,
       TopicTopicid: topicid,
       UserUserid: sessionid,
     })
@@ -46,7 +47,7 @@ export const getPosts = async (req, res) => {
         postid: post.postid,
         title: post.title,
         body: previewText(post.body, 30),
-        image: post.image,
+        image: String(post.image),
         topic: post['Topic.topicname'],
       })
     })
@@ -79,7 +80,7 @@ export const getOnePost = async (req, res) => {
         postid: postInfo.postid,
         title: postInfo.title,
         body: postInfo.body,
-        image: postInfo.image,
+        image: String(postInfo.image),
         topic: postInfo['Topic.topicname'],
         username: postInfo['User.username'],
         createpost: postInfo.createdAt,
@@ -114,7 +115,7 @@ export const getPostsByTopic = async (req, res) => {
         postid: post.postid,
         title: post.title,
         body: previewText(post.body, 195),
-        image: post.image,
+        image: String(post.image),
         topic: post['Topic.topicname'],
       })
     })

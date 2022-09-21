@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 export  const sequelize = new Sequelize(
-  `myforum`, 
+  `postgres`, 
   'postgres', 
   '1234', {
     dialect: 'postgres',
