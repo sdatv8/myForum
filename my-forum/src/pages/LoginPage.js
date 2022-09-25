@@ -26,6 +26,7 @@ export default function LoginPage () {
       if(responce.status === `ok`){
         setIsAuth(true)
         localStorage.setItem('token', responce.token)
+        localStorage.setItem('sessionid', responce.sessionId)
       } else {
         console.log(`Error: `, responce.error)
         setErrorMessage(responce.error)

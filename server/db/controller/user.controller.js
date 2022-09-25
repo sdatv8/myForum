@@ -43,7 +43,6 @@ export const loginUser = async (req, res) => {
     login,
     password,
   } = req.body
-  console.log(req.body)
   const user = await User.findOne({ where: { username: login } })
   if (user && user.dataValues.password === password) {
     res.json({

@@ -48,7 +48,7 @@ export default function PostIdPage(props) {
       await getComment()
     }
     responce()
-  }, [comment])
+  }, [])
 
   async function addComment() {
     let rpcName = 'setNewComment'
