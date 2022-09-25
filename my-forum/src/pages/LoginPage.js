@@ -14,6 +14,7 @@ export default function LoginPage () {
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   async function loginPage () {
     if (login && password) {
@@ -24,9 +25,10 @@ export default function LoginPage () {
       const responce = await fetchPost('loginUser', userData)
       if(responce.status === `ok`){
         setIsAuth(true)
-        localStorage.setItem('sessionid', responce.sessionId)
+        localStorage.setItem('token', responce.token)
       } else {
         console.log(`Error: `, responce.error)
+        setErrorMessage(responce.error)
       }
       
     }
@@ -55,10 +57,20 @@ export default function LoginPage () {
             <Link className ="navbar-brand text-primary" to="/registr">Register</Link>
           </div>
           <div className="d-flex flex-row-reverse">
-            <MyButton nameButton={'Log In'} styleButton={"btn btn-primary "} buttonClick={loginPage}/>
+            <div>
+              <MyButton nameButton={'Log In'} styleButton={"btn btn-primary "} buttonClick={loginPage}/>
+            </div>
+            <div className="ml-3">
+              {errorMessage
+              ?
+                <div className="text-danger fs-6 px-4 p-1">
+                  <p>{errorMessage}</p>
+                </div>
+              :
+              <div></div>
+              }
+            </div>
           </div>
-
-          {/* <MyButton nameButton={'Sign Up'} styleButton={"btn btn-primary"} buttonClick={registerPage}/> */}
         </form>
       </div>
     </div>

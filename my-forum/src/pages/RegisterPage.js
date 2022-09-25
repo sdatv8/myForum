@@ -17,6 +17,7 @@ export default function RegisterPage () {
   const [login, setLogin] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   async function register () {
     if (login && email && firstName && lastName) {
@@ -33,7 +34,10 @@ export default function RegisterPage () {
         navigate(`/login`, { replace: true })
       } else {
         console.log(`Error: `, responce.error)
+        setErrorMessage(responce.error)
       }
+    } else {
+      setErrorMessage('All fields must be filled')
     }
   }
 
@@ -67,9 +71,17 @@ export default function RegisterPage () {
             <MyInput typeInput={"password"} id={"floatingPassword"} styleInput={"form-control"} nameInput={"Password"} inputValue={setPassword}/>
             <label for="floatingPassword">Password</label>
           </div>
+          {errorMessage
+          ?
+            <div className="mx-auto text-danger fs-6 px-4 p-1">
+              <p>{errorMessage}</p>
+            </div>
+          :
+          <div></div>
+          }
           <div className="d-flex justify-content-evenly">
             <div>
-              <MyButton nameButton={'Cancel'} styleButton={"btn btn-primary"} buttonClick={loginPage}/>
+              <MyButton nameButton={'Cancel'} styleButton={"btn btn-secondary"} buttonClick={loginPage}/>
             </div>
             <div>
               <MyButton nameButton={'Sign Up'} styleButton={"btn btn-primary"} buttonClick={register}/>

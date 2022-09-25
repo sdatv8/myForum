@@ -20,7 +20,7 @@ export const Post = sequelize.define(
         allowNull: false,
       },
       image: {
-        type: DataTypes.BLOB,
+        type: DataTypes.BLOB('long'),
         allowNull: false,
       },
     },

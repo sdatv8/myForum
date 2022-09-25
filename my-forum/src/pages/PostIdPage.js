@@ -31,17 +31,21 @@ export default function PostIdPage(props) {
     responce()
   }, [])
 
+  async function getComment () {
+    const data = {
+      postid: postId,
+      sessionid: localStorage.getItem('sessionid'),
+    }
+    const responce = await fetchPost(`getCommentByPost`, data)
+    if (responce.status === `ok`) {
+      console.log(responce.comment)
+      setComments(responce.comment)
+    }
+  }
+
   useEffect(() => {
     const responce = async () => {
-      const data = {
-        postid: postId,
-        sessionid: localStorage.getItem('sessionid'),
-      }
-      const responce = await fetchPost(`getCommentByPost`, data)
-      if (responce.status === `ok`) {
-        console.log(responce.comment)
-        setComments(responce.comment)
-      }
+      await getComment()
     }
     responce()
   }, [comment])
@@ -57,8 +61,9 @@ export default function PostIdPage(props) {
       const responce = await fetchPost(rpcName, data)
       if (responce.status === `ok`) {
         console.log(responce.comment)
-        // setComment('')
+        setComment('')
       }
+      await getComment ()
     }
     return null
   }
@@ -71,7 +76,12 @@ export default function PostIdPage(props) {
       <div className="content-centr">
         <div className="container-md mt-3 mb-3 bg-white text-dark">
           <h1>{post.title}</h1>
-          <img src={post.image} className="card-img-top mb-3" alt="..."/>
+          { post.image 
+            ?
+            <img src={post.image} className="card-img-top mb-3" alt="..."/>
+            :
+            <></>
+          }
           <span>{post.body}</span>          
         </div>
         <div className="container-md mt-3 mb-3">

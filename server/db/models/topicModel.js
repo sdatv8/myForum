@@ -12,6 +12,7 @@ export const Topic = sequelize.define(
       topicname: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
     },
     {

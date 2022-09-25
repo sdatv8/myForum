@@ -2,6 +2,7 @@ import { Post } from "./db/models/postModel.js";
 import { Topic } from "./db/models/topicModel.js";
 import { User } from "./db/models/userModel.js";
 import base64_encode from "./helpers/base64_encode.js"
+import getToken from "./helpers/getToken.js";
 
 const img = undefined
 
@@ -23,12 +24,15 @@ let posts = [
 
 
 const createStruct = async () => {
+  const token = await getToken()
+  console.log(token)
   await User.create({
     firstname: 'admin',
     lastname: 'adminovich',
     username: 'admin',
     email: 'admin@admin.com',
-    password: '123456'
+    password: '123456',
+    token: token
   });
 
   const topics = ['Python', 'JavaScript', 'Java']
@@ -39,13 +43,13 @@ const createStruct = async () => {
     });
   }
   const code = base64_encode('./files/1_zxixptvl4rzkx3eduj38xw.jpeg')
-  console.log(code)
+  const url = `https://netpoint-dc.com/blog/wp-content/uploads/2019/10/1_zxixptvl4rzkx3eduj38xw.jpeg`
 
   for (let post of posts) {
     await Post.create({
       title: post.title,
       body: post.body,
-      image: code,
+      image: url,
       TopicTopicid: post.topicid,
       UserUserid: post.sessionid,
     })

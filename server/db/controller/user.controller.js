@@ -1,3 +1,4 @@
+import getToken from "../../helpers/getToken.js"
 import { User } from "../models/userModel.js"
 
 export const createUser = async (req, res) => {
@@ -8,6 +9,7 @@ export const createUser = async (req, res) => {
     email,
     password,
   } = req.body
+  const token = await getToken()
   try{
     const newUser = await User.create({
       firstname: firstName,
@@ -15,6 +17,7 @@ export const createUser = async (req, res) => {
       username: login,
       email: email,
       password: password,
+      token: token
     })
     if (newUser) {
       res.json({
@@ -46,13 +49,14 @@ export const loginUser = async (req, res) => {
     res.json({
       status: `ok`,
       sessionId: user.dataValues.userid,
+      token: user.dataValues.token,
       error: ``
   })
   } else {
     res.json({
       status: `error`,
       sessionId: ``,
-      error: `Not found user`
+      error: `Not correct login or password`
   })
   }
 }

@@ -19,6 +19,7 @@ export default function NewPostPage (props) {
   const [modalActive, setModalActive] = useState(false)
   const [newTopic, setNewTopic] = useState('')
   const [image, setImage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
 
   async function createPost() {
@@ -36,6 +37,8 @@ export default function NewPostPage (props) {
       if (responce.status === `ok`) {
         navigate(`/${topic}`, { replace: true })
       }
+    } else {
+      setErrorMessage('Please fill in the body and title field')
     }
   }
   function activeModal () {
@@ -58,8 +61,9 @@ export default function NewPostPage (props) {
       if (responce.status === `ok`) {
         setTopics(responce.topics)
         return responce.topics
+      } else {
+        setErrorMessage(responce.status)
       }
-      return null
     }
     responce()
   }, [])
@@ -89,8 +93,21 @@ export default function NewPostPage (props) {
           <textarea className="form-control" placeholder="Leave a comment here" id="textarea2" style={{height: '420px'}} onChange={(event) => setBody(event.target.value)}></textarea>
           <label for="textarea2">Send text...</label>
         </div>
-        <MyButton nameButton={'Add New Post'} styleButton={"btn btn-primary top-10"} buttonClick={createPost}/>
-      </div>
+        <div className="d-flex">
+          <div>
+            <MyButton nameButton={'Add New Post'} styleButton={"btn btn-primary top-10"} buttonClick={createPost}/>
+          </div>
+          {errorMessage
+          ?
+            <div className="mx-auto text-danger fs-6 px-4 p-1">
+              <p>{errorMessage}</p>
+            </div>
+          :
+          <div></div>
+          }
+        </div>
+
+        </div>
     </div>
   </div>
   )

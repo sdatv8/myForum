@@ -23,7 +23,6 @@ export default function MainPage () {
         setPosts(data.posts)
         setTopics(data.toptics)
         console.log(data.post)
-        return data
       }
     }
     responce()
